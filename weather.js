@@ -1,8 +1,9 @@
 let updateWidget = function(data) {
   console.log("Got weather data: ", data)
+  console.log("Weather icon: ", data.weather.icon)
   $(".card-text").text("It is " + Math.round(data.main.temp) +  " degrees outside.")
   $(".card-title").text(data.name)
-  $("card-img-top bg-primary img-fluid").attr("src", "http://openweathermap.org/img/w/" + data.icons + ".png")
+  $("card-img-top bg-primary img-fluid").attr("src", "http://openweathermap.org/img/w/" + data.weather.icon + ".png")
 
   // HINT:
   // Weather icons are provided for you. Sample URL: http://openweathermap.org/img/w/01d.png
