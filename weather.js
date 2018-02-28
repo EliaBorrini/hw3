@@ -1,7 +1,8 @@
 let updateWidget = function(data) {
-
   console.log("Got weather data: ", data)
-  // YOUR CODE GOES HERE
+  $(".card-text").text("It is " + Math.round(data.main.temp) +  " degrees outside.")
+  $(".card-title").text(data.name)
+
 
   // HINT:
   // Weather icons are provided for you. Sample URL: http://openweathermap.org/img/w/01d.png
@@ -9,11 +10,13 @@ let updateWidget = function(data) {
 
 }
 
+let getWeather = function(info) {
+  console.log(info)
+  window.myInfo = info
 
-let getWeather = function(event) {
-  let latitude = '48.8566';
-  let longitude = '2.3522';
-  let apiKey = '4ce6f502d38ddae567bf1702b05e168c'; // REPLACE THIS VALUE with your own key.
+  let latitude = info.coords.latitude.toFixed(4);
+  let longitude = info.coords.longitude.toFixed(4);
+  let apiKey = 'b9dad23a2ba7ee97e3cb9f2d4a7d2b5b'; // REPLACE THIS VALUE with your own key.
 
   let weatherServiceURL = 'https://api.openweathermap.org/data/2.5/weather?'
   weatherServiceURL += 'lat=' + latitude
@@ -23,6 +26,14 @@ let getWeather = function(event) {
   fetch(weatherServiceURL).then(convertToJSON).then(updateWidget).catch(displayError);
 }
 
+let handlePosition = function(event) {
+  console.log("Starting handlePosition...")
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(getWeather);
+  console.log("Ending handlePosition...")
+}
+
+$("#get_forecast").on("click", handlePosition)
 
 ////////////////////////////////////////////////////////////
 // YOU DO NOT NEED TO CHANGE ANY CODE BEYOND THIS POINT
